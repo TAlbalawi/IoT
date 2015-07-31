@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>IoT Project</title>
+
+    <style>
+          html, body {
+          height: 100%;
+          width : 100%;
+          margin: 0;
+          padding: 0;
+          display: box;
+          background: #F5F5F5
+         }
+
+          #map-canvas{
+          height: 40%;
+          width : 40%;
+          margin: 0;
+          padding: 100;
+          display: box;
+          margin-left: auto;
+          margin-right: auto;
+          background: #F5F5F5;
+          }
+
+          #chart{
+          height: 60%;
+          width : 60%;
+          margin: 0;
+          padding: 0;
+          display: box;
+          background: #F5F5F5;
+
+          }
+
+          span {
+                margin:0 10px;
+
+                 }
+
+          span:first-of-type{
+                 margin-left:0;
+                  }
+
+           span:last-of-type{
+                  margin-right:0;
+                  }
+
+    </style>
+
+
+	<meta http-equiv="Content-Language" content="German" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" type="text/css" href="static/style.css" media="screen" />
+	<link href='http://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css' />
+
+
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://www.google.com/jsapi"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+</head>
+<!-- ********************************************************************************* -->
+
+<body>
+
+<div id="wrap">
+<div  style="text-align:center; background-color:white; padding: 3px;
+margin: 3px;"></div>
+	<div id="header">
+
+		<div id="headerlinks">
+		<a title="Blog">Tahani Albalawi</a>
+		<br>
+		<a title="Blog">Summer 2015</a>
+		</div>
+		<h1><a>ST: Internet of Things CS-79995 </a></h1>
+	</div>
+<div  style="text-align:center; background-color:lightblue; padding: 5px;
+margin: 0px;"></div>
+
+<div  style="text-align:center; background-color:black; padding: 3px;
+margin: 0px;"></div>
+
+
+
+
+
+
+	<div></div>
+<!-- ********************************************************************************* -->
+
+
+<!-- ********************************************************************************* -->
+
+	<div id="content">
+
+	<br>
+
+
+
+
+
+		<h2>Final Project </h2>
+		<p> Display RPi Class weather Stream on google map by using Fusion Tables layers and visualize the stream using line chart </p>
+
+		<script>
+            var map, layer;
+            function initialize() {
+                var kent = new google.maps.LatLng(41.1400,-81.3500);
+
+               map = new google.maps.Map(document.getElementById('map-canvas'), {
+                   center: kent,
+                   zoom: 11,
+                   mapTypeId: google.maps.MapTypeId.ROADMAP
+               });
+
+           layer = new google.maps.FusionTablesLayer({
+              query: {
+                 select: 'temperature',
+                 from: '1C0OUZDFI4exCNVsS8UuF05pkxfg9fQMgmfkSX7r_'
+                  }
+             });
+
+             layer.setMap(map);
+             }
+               google.maps.event.addDomListener(window, 'load', initialize);
+
+        </script>
+
+<!-- ********************************************************************************* -->
+
+
+
+		<script>
+
+    // onload callback
+     function drawChart() {
+
+     var public_key = 'aGOE6rY5mxcxX1GNnOKq';
+   // JSONP request
+     var jsonData = $.ajax({
+           url: 'https://data.sparkfun.com/output/' + public_key + '.json',
+           data: {page: 10},
+           dataType: 'jsonp',
+           }).done(function (results) {
+                 var data = new google.visualization.DataTable();
+                       data.addColumn('datetime', 'Timestamp');
+                       data.addColumn('number', 'Temperature');
+                       data.addColumn('number', 'Light');
+                       $.each(results, function (i, row) {
+                           data.addRow([
+                                (new Date(row.timestamp)),
+                                parseFloat(row.temperature),
+                                parseFloat(row.light),
+          ]);
+    });
+
+      var options = {
+            title: 'Weather Chart',
+            curveType: 'function',
+            legend: { position: 'bottom' }
+                    };
+
+ //ChartWrapper //LineChart
+
+      var chart = new google.visualization.LineChart($('#chart').get(0));
+       chart.draw(data, {
+       //title: 'Weather Chart for RPi Class Weather Stream :'
+  });
+  });
+ }
+ // load chart lib
+    google.load('visualization', '1', {
+    packages: ['corechart']
+});
+
+ // call drawChart once google charts is loaded
+    google.setOnLoadCallback(drawChart);
+</script>
+	</div>
+<!-- ********************************************************************************* -->
+
+	<div id="footer">
+
+
+	</div>
+</div>
+</body>
+   <div id="map-canvas"></div>
+   <div id="chart" style="width: 100%;"></div>
+</html>

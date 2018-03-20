@@ -2,8 +2,8 @@
 // THE 定数
 module.exports = {
   settings: {
-    lineColor:    '#aaa',
-    lineSize:     5,
+    lineColor:    '#FF4719',
+    lineSize:     2,
     boardColor:   'transparent',
     historyDepth: 10
   }

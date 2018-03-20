@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+  <title>SimpleDrawingBoard</title>
+  <style>
+    body {
+      text-align: center;
+      background-color: #11111;
+
+
+    }
+    canvas {
+      border: 2px solid #000000;
+      cursor: default;
+      
+      
+       background-image:url('https://rawgit.com/TAlbalawi/IoT/master/L1.jpg');
+       opacity: 0.9;
+       background-repeat: no-repeat;
+       background-size: 250px 333px;
+      
+    }
+
+
+  </style>
+</head>
+<body>
+  <h3>Draw your pattren</h3>
+  <canvas id="c" width="250" height="333"></canvas>
+  <div>
+    <button onclick="sdb.clear()">Confirm the pattern</button>
+    <button onclick="sdb.clear()">Reset</button>
+
+    
+    <!-- back and front
+    <button onclick="sdb.undo()">戻</button> //back
+    <button onclick="sdb.redo()">進</button> -->
+    
+    <!--colors   background-image: url("paper.gif");
+    <button onclick="sdb.setLineColor('#000')">黒</button> 
+    <button onclick="sdb.setLineColor('#fff')">白</button>
+    <button onclick="sdb.setLineColor('#f00')">赤</button>
+    <button onclick="sdb.setLineColor('#0f0')">緑</button>
+    <button onclick="sdb.setLineColor('#00f')">青</button> -->
+    
+
+    <!-- bold
+    <button onclick="sdb.setLineSize(1)">細</button>
+    <button onclick="sdb.setLineSize(15)">中</button>
+    <button onclick="sdb.setLineSize(30)">太</button>
+    /-->
+
+    <!-- bg color whight/ black)
+    <button onclick="sdb.fill('#fff')">black</button>
+    <button onclick="sdb.fill('#000')">whight</button>
+  </div>--> 
+
+  <script src="./simple-drawing-board.js"></script>
+
+
+  <script src="./main.js"></script>
+</body>
+</html>

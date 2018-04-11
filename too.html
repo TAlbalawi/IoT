@@ -1,0 +1,155 @@
+<html>
+    <head>
+    <style> 
+/*==============================    lock.css  =================================================*/
+
+.tutorialWrapper{
+      width: 100%;
+    }
+    .tutorialWrapper form{
+      background-color: #ffc;
+      border: 1px solid #cc9;
+      padding: 10px;
+      font-family: Futura;
+      width: 75%;
+      font-size: 28px;
+    }
+    .fieldWrapper{
+      margin: 2px 0 2px 0;
+      padding: 0;
+    }
+    .tutorialWrapper label{ /* no */
+      float: left;
+      text-align: right;
+      margin: 0 5px 0 0;
+      width: 30%;
+    }
+    .tutorialWrapper input{
+      width: 200px;
+      border: 1px solid #cc9;
+    }
+    .confirmMessage{
+      margin: 0;
+      padding: 0;
+      font-size: 28px;
+    }
+</style>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+        <script>
+            var myApp = angular.module("myapp", []);
+            myApp.controller("PasswordController", function($scope) {
+              //^(?=.{10,30}$)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*()_+}{":?><,.;'[`~])(?=[^0-9]*[0-9])(?:([\w\d!@#$%^&*()_+}{":?><,.;'[`~])(?!\1))+$
+             // var strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=[^0-9]*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})+$");
+                                                             
+            var strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})(?!.*(.)\1)");
+//(?!\1))
+//(?!.*(.)\1)
+            //  var strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})(?=.\1)"); //original
+
+
+
+//^(?=.{10,30}$)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*()_+}{":?><,.;'[`~])(?=[^0-9]*[0-9])(?:([\w\d!@#$%^&*()_+}{":?><,.;'[`~])(?!\1))+$
+//
+//^(?=.{4,30}$)
+// (?=.{8,30})
+
+// (?=.*[A-Z])
+// (?=.*[A-Z])
+
+// (?=.*[a-z])
+// (?=.*[a-z])
+
+// (?=.*[!@#$%^&*()_+}{":?><,.;'[`~])
+// (?=.*[!@#\$%\^&\*])
+
+// (?=[^0-9]*[0-9])
+// (?=.*[0-9])
+
+// (?:([\w\d!@#$%^&*()_+}{":?><,.;'[`~])
+// (?!\1))+$
+//________________________________________
+
+            var mediumRegex = new RegExp("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})");
+
+
+
+
+                $scope.passwordStrength = {
+                    "float": "left",
+                    "width": "100px",
+                    "height": "25px",
+                    "margin-left": "5px"
+                };
+                $scope.analyze = function(value) {
+                    if(strongRegex.test(value)) {
+                        $scope.passwordStrength["background-color"] = "green";
+                    } 
+                      else {
+                        $scope.passwordStrength["background-color"] = "red";
+                    }
+                };
+            });
+        </script>
+        <script>
+          function checkPass()
+{
+    //Store the password field objects into variables ...
+    var pass1 = document.getElementById('pass1');
+    var pass2 = document.getElementById('pass2');
+    //Store the Confimation Message Object ...
+    var message = document.getElementById('confirmMessage');
+    //Set the colors we will be using ...
+    var goodColor = "#66cc66";
+    var badColor = "#ff6666";
+    //Compare the values in the password field 
+    //and the confirmation field
+    if(pass1.value == pass2.value){
+        //The passwords match. 
+        //Set the color to the good color and inform
+        //the user that they have entered the correct password 
+        pass2.style.backgroundColor = goodColor;
+        message.style.color = goodColor;
+        message.innerHTML = "Passwords Match!"
+    }else{
+        //The passwords do not match.
+        //Set the color to the bad color and
+        //notify the user.
+        pass2.style.backgroundColor = badColor;
+        message.style.color = badColor;
+        message.innerHTML = "Passwords Do Not Match!"
+    }
+} 
+        </script>
+
+
+
+    </head>
+    <body ng-app="myapp">
+        <div ng-controller="PasswordController">
+            <div style="float: left; width: 300px">
+
+
+                <label for="pass1">User name:</label> 
+                <br><br><br><br><br>
+              <!--  <input type="text" name="username" style="width: 300px; height: 50px" ng-style="passwordStrength" />
+                <br><br> -->
+
+
+                <label for="pass1">Password:</label> <!--cc-->
+<br><br>
+                <input type="text" name="pass1" id="pass1" ng-model="password" ng-change="analyze(password)" style="width: 300px; height: 50px" ng-style="passwordStrength" />
+                <br><br>
+
+<!--cc from -->
+                 <label for="pass2">Confirm Password:</label> <!--cc-->
+                 <br><br>
+                  <input type="password" name="pass2" id="pass2" style="width: 300px; height: 50px"onkeyup="checkPass(); return false;">
+            <span id="confirmMessage" class="confirmMessage"></span>
+<!--cc to here -->
+
+
+            </div>
+            
+        </div>
+    </body>
+</html>
